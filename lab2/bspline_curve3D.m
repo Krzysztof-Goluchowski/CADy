@@ -16,7 +16,7 @@ function bspline_curve(precision, knot_vector, points)
     
     [n, m] = size(points);
     
-    % zmiana: oczekujemy teraz 3 kolumn (x,y,z)
+    % oczekujemy teraz 3 kolumn (x,y,z)
     if (n ~= nr || m ~= 3)
         disp("Poorly constructed points array - expected N x 3");
         return
@@ -35,24 +35,17 @@ function bspline_curve(precision, knot_vector, points)
         fprintf('\n');
         res_x = res_x + (spline .* points(ind, 1));
         res_y = res_y + (spline .* points(ind, 2));
-        res_z = res_z + (spline .* points(ind, 3)); % akumulacja Z
+        res_z = res_z + (spline .* points(ind, 3)); % Z
     end
     
-    % rysowanie 3D
     plot3(res_x, res_y, res_z, 'r', 'LineWidth', 1.5)
     hold on
-    % pokaż punkty kontrolne 3D (rozmiar markerów: 36)
+
     scatter3(points(:, 1), points(:, 2), points(:, 3), 36, 'b', 'filled')
     
-    % ustawienia osi i widoku 3D
     axis equal
     grid on
-    view(3)        % widok trójwymiarowy
-    % opcjonalne ograniczenia widoku (dostosuj w razie potrzeby)
-    % xlim([-1 2.5])
-    % ylim([-1 3.5])
-    % zlim([-1 1])
-    
+    view(3)
     hold off;
 
     function p = compute_p(knot_vector)
