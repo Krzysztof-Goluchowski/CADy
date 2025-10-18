@@ -1,4 +1,4 @@
-function bspline_curve(precision, knot_vector, points)
+function bspline_curve3D(precision, knot_vector, points)
     if mod(precision, 2) == 0
        precision = precision + 1;
     end
