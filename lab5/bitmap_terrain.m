@@ -365,11 +365,37 @@ for i=1:nx
   end
 end
 
-% --- WIZUALIZACJA 3D ---
 figure;
 surf(X, Y, Z);
+axis tight
 
-hold off
+nFrames = 36; 
+folder = 'frames360';
+mkdir(folder);
+
+% --- OBRÓT I ZAPIS KLATEK ---
+for i = 1:nFrames
+    angle = (i-1) * 10;
+    view(angle, 30);
+    drawnow;
+    
+    filename = fullfile(folder, sprintf('frame_%03d.jpg', i));
+    saveas(gcf, filename);
+end
+
+% --- TWORZENIE ANIMACJI ---
+outputFile = 'animacja360.gif';
+for i = 1:nFrames
+    filename = fullfile(folder, sprintf('frame_%03d.jpg', i));
+    img = imread(filename);
+    [A,map] = rgb2ind(img,256);
+    
+    if i == 1
+        imwrite(A,map,outputFile,'gif','LoopCount',Inf,'DelayTime',0.1);
+    else
+        imwrite(A,map,outputFile,'gif','WriteMode','append','DelayTime',0.1);
+    end
+end
 
 rebuild=toc
 
